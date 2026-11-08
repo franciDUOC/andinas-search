@@ -1,23 +1,21 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, redirect } from "@tanstack/react-router";
+import { cargarSesion } from "@/lib/session";
+import { INICIO_POR_ROL } from "@/lib/roles";
 
-// The home route ships no og:image, so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
 export const Route = createFileRoute("/")({
-  component: Index,
+  ssr: false,
+  head: () => ({
+    meta: [
+      { title: "Andinas Search · Mantenimiento Manufacturas Andina" },
+      { name: "description", content: "Sistema de mantenimiento de planta de Manufacturas Andina." },
+      { property: "og:title", content: "Andinas Search" },
+      { property: "og:description", content: "Sistema de mantenimiento de planta de Manufacturas Andina." },
+    ],
+  }),
+  beforeLoad: async () => {
+    const sesion = await cargarSesion();
+    if (!sesion) throw redirect({ to: "/auth" });
+    throw redirect({ to: INICIO_POR_ROL[sesion.rol] });
+  },
+  component: () => null,
 });
-
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
-function Index() {
-  return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
-    </div>
-  );
-}
