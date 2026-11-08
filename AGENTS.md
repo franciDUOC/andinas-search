@@ -28,3 +28,5 @@ use the editor.
   own key and store it in Secrets.
 - **Secrets.** Lovable manages them. Do not put secret values in the repo.
 <!-- LOVABLE:END -->
+
+- Roles live in `public.user_roles` (checked via `has_role`), never on `profiles`; each role page guards itself with `exigirRol` in `beforeLoad` so wrong-role users are redirected to their own home.
