@@ -14,6 +14,81 @@ export type Database = {
   }
   public: {
     Tables: {
+      anomaly_reports: {
+        Row: {
+          creado_en: string
+          descripcion: string | null
+          estado: string
+          id: string
+          machine_id: string
+          reportado_por: string
+          tipo: string
+        }
+        Insert: {
+          creado_en?: string
+          descripcion?: string | null
+          estado?: string
+          id?: string
+          machine_id: string
+          reportado_por: string
+          tipo: string
+        }
+        Update: {
+          creado_en?: string
+          descripcion?: string | null
+          estado?: string
+          id?: string
+          machine_id?: string
+          reportado_por?: string
+          tipo?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "anomaly_reports_machine_id_fkey"
+            columns: ["machine_id"]
+            isOneToOne: false
+            referencedRelation: "machines"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "anomaly_reports_reportado_por_fkey"
+            columns: ["reportado_por"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      machines: {
+        Row: {
+          codigo: string
+          creado_en: string
+          estado: string
+          id: string
+          manual_url: string | null
+          nombre: string
+          ubicacion: string
+        }
+        Insert: {
+          codigo: string
+          creado_en?: string
+          estado?: string
+          id?: string
+          manual_url?: string | null
+          nombre: string
+          ubicacion?: string
+        }
+        Update: {
+          codigo?: string
+          creado_en?: string
+          estado?: string
+          id?: string
+          manual_url?: string | null
+          nombre?: string
+          ubicacion?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           created_at: string
@@ -49,6 +124,71 @@ export type Database = {
           user_id?: string
         }
         Relationships: []
+      }
+      work_orders: {
+        Row: {
+          anomaly_report_id: string
+          asignado_por: string
+          causa_falla: string | null
+          completado_en: string | null
+          creado_en: string
+          estado: string
+          id: string
+          machine_id: string
+          tecnico_id: string
+        }
+        Insert: {
+          anomaly_report_id: string
+          asignado_por: string
+          causa_falla?: string | null
+          completado_en?: string | null
+          creado_en?: string
+          estado?: string
+          id?: string
+          machine_id: string
+          tecnico_id: string
+        }
+        Update: {
+          anomaly_report_id?: string
+          asignado_por?: string
+          causa_falla?: string | null
+          completado_en?: string | null
+          creado_en?: string
+          estado?: string
+          id?: string
+          machine_id?: string
+          tecnico_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "work_orders_anomaly_report_id_fkey"
+            columns: ["anomaly_report_id"]
+            isOneToOne: false
+            referencedRelation: "anomaly_reports"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "work_orders_asignado_por_fkey"
+            columns: ["asignado_por"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "work_orders_machine_id_fkey"
+            columns: ["machine_id"]
+            isOneToOne: false
+            referencedRelation: "machines"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "work_orders_tecnico_id_fkey"
+            columns: ["tecnico_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
       }
     }
     Views: {

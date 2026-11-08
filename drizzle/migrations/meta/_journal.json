@@ -8,6 +8,13 @@
       "when": 1794154909471,
       "tag": "0000_perfiles_y_roles",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1794155461561,
+      "tag": "0001_crear_maquinas_reportes_ordenes",
+      "breakpoints": true
     }
   ]
 }
