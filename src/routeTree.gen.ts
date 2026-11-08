@@ -10,33 +10,95 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
+import { Route as AuthRouteImport } from './routes/auth'
+import { Route as AuthenticatedBodegaRouteImport } from './routes/_authenticated/bodega'
+import { Route as AuthenticatedOperarioRouteImport } from './routes/_authenticated/operario'
+import { Route as AuthenticatedSupervisorRouteImport } from './routes/_authenticated/supervisor'
+import { Route as AuthenticatedTecnicoRouteImport } from './routes/_authenticated/tecnico'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: '/_authenticated',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedBodegaRoute = AuthenticatedBodegaRouteImport.update({
+  id: '/bodega',
+  path: '/bodega',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedOperarioRoute = AuthenticatedOperarioRouteImport.update({
+  id: '/operario',
+  path: '/operario',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedSupervisorRoute = AuthenticatedSupervisorRouteImport.update({
+  id: '/supervisor',
+  path: '/supervisor',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedTecnicoRoute = AuthenticatedTecnicoRouteImport.update({
+  id: '/tecnico',
+  path: '/tecnico',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
+  '/bodega': typeof AuthenticatedBodegaRoute
+  '/operario': typeof AuthenticatedOperarioRoute
+  '/supervisor': typeof AuthenticatedSupervisorRoute
+  '/tecnico': typeof AuthenticatedTecnicoRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
+  '/bodega': typeof AuthenticatedBodegaRoute
+  '/operario': typeof AuthenticatedOperarioRoute
+  '/supervisor': typeof AuthenticatedSupervisorRoute
+  '/tecnico': typeof AuthenticatedTecnicoRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
+  '/auth': typeof AuthRoute
+  '/_authenticated/bodega': typeof AuthenticatedBodegaRoute
+  '/_authenticated/operario': typeof AuthenticatedOperarioRoute
+  '/_authenticated/supervisor': typeof AuthenticatedSupervisorRoute
+  '/_authenticated/tecnico': typeof AuthenticatedTecnicoRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    '/' | '/auth' | '/bodega' | '/operario' | '/supervisor' | '/tecnico'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/auth' | '/bodega' | '/operario' | '/supervisor' | '/tecnico'
+  id:
+    | '__root__'
+    | '/'
+    | '/_authenticated'
+    | '/auth'
+    | '/_authenticated/bodega'
+    | '/_authenticated/operario'
+    | '/_authenticated/supervisor'
+    | '/_authenticated/tecnico'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
+  AuthRoute: typeof AuthRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +110,72 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/bodega': {
+      id: '/_authenticated/bodega'
+      path: '/bodega'
+      fullPath: '/bodega'
+      preLoaderRoute: typeof AuthenticatedBodegaRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/operario': {
+      id: '/_authenticated/operario'
+      path: '/operario'
+      fullPath: '/operario'
+      preLoaderRoute: typeof AuthenticatedOperarioRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/supervisor': {
+      id: '/_authenticated/supervisor'
+      path: '/supervisor'
+      fullPath: '/supervisor'
+      preLoaderRoute: typeof AuthenticatedSupervisorRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/tecnico': {
+      id: '/_authenticated/tecnico'
+      path: '/tecnico'
+      fullPath: '/tecnico'
+      preLoaderRoute: typeof AuthenticatedTecnicoRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
   }
 }
 
+interface AuthenticatedRouteRouteChildren {
+  AuthenticatedBodegaRoute: typeof AuthenticatedBodegaRoute
+  AuthenticatedOperarioRoute: typeof AuthenticatedOperarioRoute
+  AuthenticatedSupervisorRoute: typeof AuthenticatedSupervisorRoute
+  AuthenticatedTecnicoRoute: typeof AuthenticatedTecnicoRoute
+}
+
+const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedBodegaRoute: AuthenticatedBodegaRoute,
+  AuthenticatedOperarioRoute: AuthenticatedOperarioRoute,
+  AuthenticatedSupervisorRoute: AuthenticatedSupervisorRoute,
+  AuthenticatedTecnicoRoute: AuthenticatedTecnicoRoute,
+}
+
+const AuthenticatedRouteRouteWithChildren =
+  AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
+  AuthRoute: AuthRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
