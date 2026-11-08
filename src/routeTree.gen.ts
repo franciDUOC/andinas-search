@@ -14,6 +14,7 @@ import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AuthenticatedBodegaRouteImport } from './routes/_authenticated/bodega'
 import { Route as AuthenticatedOperarioRouteImport } from './routes/_authenticated/operario'
+import { Route as AuthenticatedReportarRouteImport } from './routes/_authenticated/reportar'
 import { Route as AuthenticatedSupervisorRouteImport } from './routes/_authenticated/supervisor'
 import { Route as AuthenticatedTecnicoRouteImport } from './routes/_authenticated/tecnico'
 
@@ -41,6 +42,11 @@ const AuthenticatedOperarioRoute = AuthenticatedOperarioRouteImport.update({
   path: '/operario',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedReportarRoute = AuthenticatedReportarRouteImport.update({
+  id: '/reportar',
+  path: '/reportar',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedSupervisorRoute = AuthenticatedSupervisorRouteImport.update({
   id: '/supervisor',
   path: '/supervisor',
@@ -57,6 +63,7 @@ export interface FileRoutesByFullPath {
   '/auth': typeof AuthRoute
   '/bodega': typeof AuthenticatedBodegaRoute
   '/operario': typeof AuthenticatedOperarioRoute
+  '/reportar': typeof AuthenticatedReportarRoute
   '/supervisor': typeof AuthenticatedSupervisorRoute
   '/tecnico': typeof AuthenticatedTecnicoRoute
 }
@@ -65,6 +72,7 @@ export interface FileRoutesByTo {
   '/auth': typeof AuthRoute
   '/bodega': typeof AuthenticatedBodegaRoute
   '/operario': typeof AuthenticatedOperarioRoute
+  '/reportar': typeof AuthenticatedReportarRoute
   '/supervisor': typeof AuthenticatedSupervisorRoute
   '/tecnico': typeof AuthenticatedTecnicoRoute
 }
@@ -75,15 +83,29 @@ export interface FileRoutesById {
   '/auth': typeof AuthRoute
   '/_authenticated/bodega': typeof AuthenticatedBodegaRoute
   '/_authenticated/operario': typeof AuthenticatedOperarioRoute
+  '/_authenticated/reportar': typeof AuthenticatedReportarRoute
   '/_authenticated/supervisor': typeof AuthenticatedSupervisorRoute
   '/_authenticated/tecnico': typeof AuthenticatedTecnicoRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    '/' | '/auth' | '/bodega' | '/operario' | '/supervisor' | '/tecnico'
+    | '/'
+    | '/auth'
+    | '/bodega'
+    | '/operario'
+    | '/reportar'
+    | '/supervisor'
+    | '/tecnico'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/auth' | '/bodega' | '/operario' | '/supervisor' | '/tecnico'
+  to:
+    | '/'
+    | '/auth'
+    | '/bodega'
+    | '/operario'
+    | '/reportar'
+    | '/supervisor'
+    | '/tecnico'
   id:
     | '__root__'
     | '/'
@@ -91,6 +113,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/_authenticated/bodega'
     | '/_authenticated/operario'
+    | '/_authenticated/reportar'
     | '/_authenticated/supervisor'
     | '/_authenticated/tecnico'
   fileRoutesById: FileRoutesById
@@ -138,6 +161,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedOperarioRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/reportar': {
+      id: '/_authenticated/reportar'
+      path: '/reportar'
+      fullPath: '/reportar'
+      preLoaderRoute: typeof AuthenticatedReportarRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/supervisor': {
       id: '/_authenticated/supervisor'
       path: '/supervisor'
@@ -158,6 +188,7 @@ declare module '@tanstack/react-router' {
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedBodegaRoute: typeof AuthenticatedBodegaRoute
   AuthenticatedOperarioRoute: typeof AuthenticatedOperarioRoute
+  AuthenticatedReportarRoute: typeof AuthenticatedReportarRoute
   AuthenticatedSupervisorRoute: typeof AuthenticatedSupervisorRoute
   AuthenticatedTecnicoRoute: typeof AuthenticatedTecnicoRoute
 }
@@ -165,6 +196,7 @@ interface AuthenticatedRouteRouteChildren {
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedBodegaRoute: AuthenticatedBodegaRoute,
   AuthenticatedOperarioRoute: AuthenticatedOperarioRoute,
+  AuthenticatedReportarRoute: AuthenticatedReportarRoute,
   AuthenticatedSupervisorRoute: AuthenticatedSupervisorRoute,
   AuthenticatedTecnicoRoute: AuthenticatedTecnicoRoute,
 }
