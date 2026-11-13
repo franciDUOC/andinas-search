@@ -29,6 +29,13 @@
       "when": 1794586214039,
       "tag": "0003_tiempo_real_panel_maquinas",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1794586575811,
+      "tag": "0004_asignar_tecnico",
+      "breakpoints": true
     }
   ]
 }

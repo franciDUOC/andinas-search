@@ -30,3 +30,27 @@ export function contarPorFiltro(maquinas: { estado: string }[]): Record<Filtro, 
 export function filtrarMaquinas<T extends { estado: string }>(maquinas: T[], filtro: Filtro): T[] {
   return filtro === "todas" ? maquinas : maquinas.filter((m) => estadoDe(m.estado) === filtro);
 }
+
+export const TEXTO_TIPO: Record<string, string> = {
+  ruido: "Ruido",
+  vibracion: "Vibración",
+  fuga: "Fuga",
+  otra: "Otra",
+};
+
+/** Órdenes que todavía ocupan al técnico. */
+export const ESTADOS_ORDEN_ACTIVA = ["asignada", "en_progreso"] as const;
+
+export function disponibilidad(ordenesActivas: number): "Disponible" | "Ocupado" {
+  return ordenesActivas === 0 ? "Disponible" : "Ocupado";
+}
+
+export function contarOrdenesActivas(ordenes: { tecnico_id: string; estado: string }[]) {
+  const c: Record<string, number> = {};
+  for (const o of ordenes) {
+    if ((ESTADOS_ORDEN_ACTIVA as readonly string[]).includes(o.estado)) {
+      c[o.tecnico_id] = (c[o.tecnico_id] ?? 0) + 1;
+    }
+  }
+  return c;
+}

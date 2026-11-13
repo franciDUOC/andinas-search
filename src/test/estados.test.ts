@@ -1,5 +1,11 @@
 import { describe, expect, it } from "vitest";
-import { contarPorFiltro, filtrarMaquinas, TEXTO_ESTADO } from "@/lib/estados";
+import {
+  contarOrdenesActivas,
+  contarPorFiltro,
+  disponibilidad,
+  filtrarMaquinas,
+  TEXTO_ESTADO,
+} from "@/lib/estados";
 
 const maquinas = [
   { id: "1", estado: "verde" },
@@ -27,5 +33,26 @@ describe("Panel de máquinas", () => {
       amarillo: "En Mantenimiento",
       rojo: "Detenida por falla",
     });
+  });
+});
+
+describe("Asignar técnico", () => {
+  it("técnico con 0 órdenes activas está Disponible", () => {
+    expect(disponibilidad(0)).toBe("Disponible");
+  });
+
+  it("técnico con 1 o más órdenes activas está Ocupado", () => {
+    expect(disponibilidad(1)).toBe("Ocupado");
+  });
+
+  it("solo cuenta órdenes asignadas o en progreso, no completadas", () => {
+    expect(
+      contarOrdenesActivas([
+        { tecnico_id: "a", estado: "asignada" },
+        { tecnico_id: "a", estado: "en_progreso" },
+        { tecnico_id: "a", estado: "completada" },
+        { tecnico_id: "b", estado: "completada" },
+      ]),
+    ).toEqual({ a: 2 });
   });
 });
