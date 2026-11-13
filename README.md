@@ -21,7 +21,7 @@ Metodología: **Scrum**. Estimación con Planning Poker (escala de Fibonacci). G
 
 ## Tecnologías
 
-- **Frontend:** [React + TypeScript + Tailwind CSS, generado con Lovable; confirma en tu código]
+- **Frontend:** React + TypeScript + Tailwind CSS
 - **Base de datos, autenticación y tiempo real:** Supabase (PostgreSQL)
 - **Hosting:** Lovable
 - **Control de versiones:** GitHub
