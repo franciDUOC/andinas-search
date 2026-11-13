@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AuthenticatedBodegaRouteImport } from './routes/_authenticated/bodega'
+import { Route as AuthenticatedMisOrdenesRouteImport } from './routes/_authenticated/mis-ordenes'
 import { Route as AuthenticatedOperarioRouteImport } from './routes/_authenticated/operario'
 import { Route as AuthenticatedReportarRouteImport } from './routes/_authenticated/reportar'
 import { Route as AuthenticatedSupervisorRouteImport } from './routes/_authenticated/supervisor'
@@ -35,6 +36,11 @@ const AuthRoute = AuthRouteImport.update({
 const AuthenticatedBodegaRoute = AuthenticatedBodegaRouteImport.update({
   id: '/bodega',
   path: '/bodega',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedMisOrdenesRoute = AuthenticatedMisOrdenesRouteImport.update({
+  id: '/mis-ordenes',
+  path: '/mis-ordenes',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const AuthenticatedOperarioRoute = AuthenticatedOperarioRouteImport.update({
@@ -62,6 +68,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/bodega': typeof AuthenticatedBodegaRoute
+  '/mis-ordenes': typeof AuthenticatedMisOrdenesRoute
   '/operario': typeof AuthenticatedOperarioRoute
   '/reportar': typeof AuthenticatedReportarRoute
   '/supervisor': typeof AuthenticatedSupervisorRoute
@@ -71,6 +78,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/bodega': typeof AuthenticatedBodegaRoute
+  '/mis-ordenes': typeof AuthenticatedMisOrdenesRoute
   '/operario': typeof AuthenticatedOperarioRoute
   '/reportar': typeof AuthenticatedReportarRoute
   '/supervisor': typeof AuthenticatedSupervisorRoute
@@ -82,6 +90,7 @@ export interface FileRoutesById {
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
   '/_authenticated/bodega': typeof AuthenticatedBodegaRoute
+  '/_authenticated/mis-ordenes': typeof AuthenticatedMisOrdenesRoute
   '/_authenticated/operario': typeof AuthenticatedOperarioRoute
   '/_authenticated/reportar': typeof AuthenticatedReportarRoute
   '/_authenticated/supervisor': typeof AuthenticatedSupervisorRoute
@@ -93,6 +102,7 @@ export interface FileRouteTypes {
     | '/'
     | '/auth'
     | '/bodega'
+    | '/mis-ordenes'
     | '/operario'
     | '/reportar'
     | '/supervisor'
@@ -102,6 +112,7 @@ export interface FileRouteTypes {
     | '/'
     | '/auth'
     | '/bodega'
+    | '/mis-ordenes'
     | '/operario'
     | '/reportar'
     | '/supervisor'
@@ -112,6 +123,7 @@ export interface FileRouteTypes {
     | '/_authenticated'
     | '/auth'
     | '/_authenticated/bodega'
+    | '/_authenticated/mis-ordenes'
     | '/_authenticated/operario'
     | '/_authenticated/reportar'
     | '/_authenticated/supervisor'
@@ -154,6 +166,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedBodegaRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/mis-ordenes': {
+      id: '/_authenticated/mis-ordenes'
+      path: '/mis-ordenes'
+      fullPath: '/mis-ordenes'
+      preLoaderRoute: typeof AuthenticatedMisOrdenesRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/operario': {
       id: '/_authenticated/operario'
       path: '/operario'
@@ -187,6 +206,7 @@ declare module '@tanstack/react-router' {
 
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedBodegaRoute: typeof AuthenticatedBodegaRoute
+  AuthenticatedMisOrdenesRoute: typeof AuthenticatedMisOrdenesRoute
   AuthenticatedOperarioRoute: typeof AuthenticatedOperarioRoute
   AuthenticatedReportarRoute: typeof AuthenticatedReportarRoute
   AuthenticatedSupervisorRoute: typeof AuthenticatedSupervisorRoute
@@ -195,6 +215,7 @@ interface AuthenticatedRouteRouteChildren {
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedBodegaRoute: AuthenticatedBodegaRoute,
+  AuthenticatedMisOrdenesRoute: AuthenticatedMisOrdenesRoute,
   AuthenticatedOperarioRoute: AuthenticatedOperarioRoute,
   AuthenticatedReportarRoute: AuthenticatedReportarRoute,
   AuthenticatedSupervisorRoute: AuthenticatedSupervisorRoute,
