@@ -1,24 +1,46 @@
-# Andinas Planta Control
+# Andinas Search
 
-Vamos a construir "Andinas Search", un sistema de mantenimiento (CMMS) para una planta industrial de la empresa Manufacturas Andina. Es una aplicación web responsive que se usa desde celular (operarios y técnicos) y desde PC/tablet (supervisor y bodega). Reglas de diseño que debes respetar SIEMPRE: - Interfaz en español. - Mobile first. Todos los botones de al menos 48x48 px porque los usuarios usan guantes de trabajo. - Diseño muy simple, textos grandes, pocos pasos, colores claros con buen contraste. - Estados de máquinas: Verde = Operativa, Amarillo = En Mantenimiento, Rojo = Detenida por falla. - Usa Supabase para base de datos, login, tiempo real y archivos. Construiremos paso a paso. No agregues funciones que no te pida. Confirma que entendiste y espera mi siguiente instrucción.
+Sistema de gestión de mantenimiento asistido por computadora (CMMS) para **Manufacturas Andina S.A.**. Permite reportar fallas de maquinaria, monitorear su estado en tiempo real, asignar órdenes de trabajo a técnicos y consultar el historial de cada máquina desde el celular.
 
-This project was built with [Lovable](https://lovable.dev).
+**Aplicación publicada:** https://andinasearch.lovable.app/
 
-## Build with Lovable
+## Problema que resuelve
 
-Continue developing this project in the [Lovable editor](https://lovable.dev/projects/6b558c31-5e8c-5976-931b-0d1affaf66da).
+Hoy el mantenimiento se gestiona con bitácoras en papel, planillas Excel y comunicación informal. Esto genera pérdida de historial, demoras en la atención de fallas y poco control del gasto en repuestos. Andinas Search centraliza todo en un registro único por máquina.
 
-- **Ship faster**: describe what you want to build and Lovable handles the code.
-- **Stay in sync**: every change made in Lovable is committed straight to this repository.
-- **Full ownership**: this code is yours. Push to `main` on GitHub and your changes sync back into Lovable, ready for your next prompt.
+## Equipo
 
-## Development
+| Integrante | Rol |
+|---|---|
+| Francisco Alarcon | Scrum Master|
+| Jorge Cifuentes | Lead Developer |
+| Mateo Valenzuela | Product Owner y Analista de requisitos |
+| Tomas Canales| QA Lead|
 
-Prefer working locally? You need Node.js and npm — [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating).
+Metodología: **Scrum**. Estimación con Planning Poker (escala de Fibonacci). Gestión del backlog en Jira (claves MNT-X).
 
-```sh
-git clone <this-repository-url>
-cd <repository-name>
-npm i
-npm run dev
-```
+## Tecnologías
+
+- **Frontend:** [React + TypeScript + Tailwind CSS, generado con Lovable; confirma en tu código]
+- **Base de datos, autenticación y tiempo real:** Supabase (PostgreSQL)
+- **Hosting:** Lovable
+- **Control de versiones:** GitHub
+
+## Roles de usuario
+
+| Rol | Qué hace |
+|---|---|
+| Operario | Reporta anomalías (ruido, vibración, fuga) en máximo 3 pasos |
+| Técnico | Recibe órdenes, escanea QR de máquinas y consulta historial y manuales |
+| Supervisor | Monitorea el panel semafórico y asigna órdenes de trabajo |
+
+## Estado del proyecto
+
+### Sprint 1 (avance)
+
+| Historia | Jira | Estado |
+|---|---|---|
+| HU-1: Reportar anomalías | MNT-5 | Implementada |
+| HU-3A: Panel semáforo de máquinas | MNT-8 | Implementada |
+| HU-3B: Asignar y reasignar órdenes | MNT-9 | [En desarrollo / Implementada] |
+| HU-2A: QR, historial y manuales | MNT-6 | Pendiente |
