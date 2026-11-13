@@ -209,7 +209,7 @@ function Tarjeta({
   className,
   children,
 }: {
-  onClick?: () => void;
+  onClick?: (() => void) | undefined;
   className: string;
   children: ReactNode;
 }) {
