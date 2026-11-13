@@ -54,3 +54,9 @@ export function contarOrdenesActivas(ordenes: { tecnico_id: string; estado: stri
   }
   return c;
 }
+
+export const TEXTO_ORDEN: Record<string, string> = {
+  asignada: "Asignada",
+  en_progreso: "En progreso",
+  completada: "Completada",
+};
