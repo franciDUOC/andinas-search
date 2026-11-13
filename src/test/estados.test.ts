@@ -1,5 +1,11 @@
 import { describe, expect, it } from "vitest";
-import { contarPorFiltro, filtrarMaquinas, TEXTO_ESTADO } from "@/lib/estados";
+import {
+  contarOrdenesActivas,
+  contarPorFiltro,
+  disponibilidad,
+  filtrarMaquinas,
+  TEXTO_ESTADO,
+} from "@/lib/estados";
 
 const maquinas = [
   { id: "1", estado: "verde" },
@@ -29,8 +35,6 @@ describe("Panel de máquinas", () => {
     });
   });
 });
-
-import { contarOrdenesActivas, disponibilidad } from "@/lib/estados";
 
 describe("Asignar técnico", () => {
   it("técnico con 0 órdenes activas está Disponible", () => {

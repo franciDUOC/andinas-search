@@ -3,7 +3,13 @@ import { useQueryClient } from "@tanstack/react-query";
 import { CheckCircle2, UserCog } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import {
   ESTADO_PENDIENTE,
   ESTADOS_ORDEN_ACTIVA,
@@ -26,7 +32,9 @@ type Tecnico = { id: string; nombre: string; activas: number };
 async function cargarReporte(maquinaId: string): Promise<Reporte | null> {
   const { data } = await supabase
     .from("anomaly_reports")
-    .select("id,tipo,descripcion,creado_en,reportante:profiles!anomaly_reports_reportado_por_fkey(nombre_completo)")
+    .select(
+      "id,tipo,descripcion,creado_en,reportante:profiles!anomaly_reports_reportado_por_fkey(nombre_completo)",
+    )
     .eq("machine_id", maquinaId)
     .eq("estado", ESTADO_PENDIENTE)
     .order("creado_en", { ascending: false })
@@ -57,7 +65,13 @@ async function cargarTecnicos(): Promise<Tecnico[]> {
     .sort((a, b) => a.activas - b.activas || a.nombre.localeCompare(b.nombre));
 }
 
-export function DetalleMaquinaRoja({ maquina, onClose }: { maquina: Maquina | null; onClose: () => void }) {
+export function DetalleMaquinaRoja({
+  maquina,
+  onClose,
+}: {
+  maquina: Maquina | null;
+  onClose: () => void;
+}) {
   const queryClient = useQueryClient();
   const [reporte, setReporte] = useState<Reporte | null | undefined>(undefined);
   const [tecnicos, setTecnicos] = useState<Tecnico[] | null>(null);
@@ -115,7 +129,9 @@ export function DetalleMaquinaRoja({ maquina, onClose }: { maquina: Maquina | nu
           <div className="flex flex-col items-center gap-4 rounded-2xl bg-estado-operativa p-6 text-center text-primary-foreground">
             <CheckCircle2 className="size-14" />
             <p className="text-2xl font-bold">Técnico asignado</p>
-            <p className="text-lg">La orden quedó asignada a {asignado}. La máquina pasa a En Mantenimiento.</p>
+            <p className="text-lg">
+              La orden quedó asignada a {asignado}. La máquina pasa a En Mantenimiento.
+            </p>
             <Button variant="secondary" size="lg" className="w-full" onClick={onClose}>
               Cerrar
             </Button>
@@ -162,7 +178,10 @@ export function DetalleMaquinaRoja({ maquina, onClose }: { maquina: Maquina | nu
               <div
                 role="radiogroup"
                 aria-label="Técnicos"
-                className={cn("space-y-3 rounded-xl", faltaTecnico && "ring-4 ring-destructive ring-offset-2")}
+                className={cn(
+                  "space-y-3 rounded-xl",
+                  faltaTecnico && "ring-4 ring-destructive ring-offset-2",
+                )}
               >
                 {tecnicos.map((t) => {
                   const estado = disponibilidad(t.activas);
@@ -179,7 +198,9 @@ export function DetalleMaquinaRoja({ maquina, onClose }: { maquina: Maquina | nu
                       }}
                       className={cn(
                         "flex min-h-16 w-full items-center justify-between gap-3 rounded-xl border-2 px-4 py-3 text-left transition-colors",
-                        elegido ? "border-primary bg-secondary" : "border-border bg-card hover:bg-accent",
+                        elegido
+                          ? "border-primary bg-secondary"
+                          : "border-border bg-card hover:bg-accent",
                       )}
                     >
                       <span className="min-w-0">
@@ -203,10 +224,17 @@ export function DetalleMaquinaRoja({ maquina, onClose }: { maquina: Maquina | nu
                 })}
               </div>
             )}
-            {faltaTecnico && <p className="text-lg font-bold text-destructive">Elige un técnico para continuar.</p>}
+            {faltaTecnico && (
+              <p className="text-lg font-bold text-destructive">Elige un técnico para continuar.</p>
+            )}
             {error && <p className="text-lg font-bold text-destructive">{error}</p>}
             <div className="grid grid-cols-2 gap-3">
-              <Button variant="outline" size="lg" onClick={() => setEligiendo(false)} disabled={guardando}>
+              <Button
+                variant="outline"
+                size="lg"
+                onClick={() => setEligiendo(false)}
+                disabled={guardando}
+              >
                 Volver
               </Button>
               <Button size="lg" onClick={confirmar} disabled={guardando || !tecnicos?.length}>
