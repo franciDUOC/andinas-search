@@ -29,3 +29,26 @@ describe("Panel de máquinas", () => {
     });
   });
 });
+
+import { contarOrdenesActivas, disponibilidad } from "@/lib/estados";
+
+describe("Asignar técnico", () => {
+  it("técnico con 0 órdenes activas está Disponible", () => {
+    expect(disponibilidad(0)).toBe("Disponible");
+  });
+
+  it("técnico con 1 o más órdenes activas está Ocupado", () => {
+    expect(disponibilidad(1)).toBe("Ocupado");
+  });
+
+  it("solo cuenta órdenes asignadas o en progreso, no completadas", () => {
+    expect(
+      contarOrdenesActivas([
+        { tecnico_id: "a", estado: "asignada" },
+        { tecnico_id: "a", estado: "en_progreso" },
+        { tecnico_id: "a", estado: "completada" },
+        { tecnico_id: "b", estado: "completada" },
+      ]),
+    ).toEqual({ a: 2 });
+  });
+});
