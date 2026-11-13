@@ -22,6 +22,13 @@
       "when": 1794157418831,
       "tag": "0002_reporte_pone_maquina_roja",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1794586214039,
+      "tag": "0003_tiempo_real_panel_maquinas",
+      "breakpoints": true
     }
   ]
 }
