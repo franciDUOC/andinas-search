@@ -32,10 +32,22 @@ function Escanear() {
     navigate({ to: "/maquina/$codigo", params: { codigo: c } });
   }
 
+  const [intentos, setIntentos] = useState(0);
+
   useEffect(() => {
     let lector: { stop: () => Promise<void>; isScanning: boolean } | null = null;
     let cancelado = false;
     (async () => {
+      if (!window.isSecureContext) {
+        setErrorCamara(
+          "La cámara solo funciona si la dirección de la página empieza con https://. Abre la app desde el enlace seguro y vuelve a intentar.",
+        );
+        return;
+      }
+      if (!navigator.mediaDevices?.getUserMedia) {
+        setErrorCamara("Este navegador no permite usar la cámara. Escribe el código de la máquina abajo.");
+        return;
+      }
       const { Html5Qrcode } = await import("html5-qrcode");
       if (cancelado) return;
       const l = new Html5Qrcode(ID_LECTOR);
@@ -52,8 +64,17 @@ function Escanear() {
           () => {},
         );
         if (cancelado) await l.stop();
-      } catch {
-        setErrorCamara("No se pudo abrir la cámara. Escribe el código de la máquina abajo.");
+      } catch (e) {
+        const nombre = e instanceof Error ? e.name : "";
+        if (nombre === "NotAllowedError" || nombre === "SecurityError") {
+          setErrorCamara(
+            "La app no tiene permiso para usar la cámara. Toca el candado o el ícono de ajustes junto a la dirección de la página, permite la cámara y pulsa Reintentar.",
+          );
+        } else if (nombre === "NotFoundError" || nombre === "OverconstrainedError") {
+          setErrorCamara("No se encontró una cámara en este equipo. Escribe el código de la máquina abajo.");
+        } else {
+          setErrorCamara("No se pudo abrir la cámara. Pulsa Reintentar o escribe el código de la máquina abajo.");
+        }
       }
     })();
     return () => {
@@ -61,7 +82,7 @@ function Escanear() {
       if (lector?.isScanning) lector.stop().catch(() => {});
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [intentos]);
 
   function enviar(e: FormEvent) {
     e.preventDefault();
@@ -81,7 +102,24 @@ function Escanear() {
 
       <p className="text-xl text-foreground">Apunta la cámara al código QR de la máquina.</p>
       <div id={ID_LECTOR} className="mx-auto w-full max-w-md overflow-hidden rounded-2xl border-2 bg-muted" />
-      {errorCamara && <p className="text-lg font-bold text-destructive">{errorCamara}</p>}
+      {errorCamara && (
+        <div className="space-y-3 rounded-2xl border-2 border-destructive bg-card p-5">
+          <p className="text-lg font-bold text-destructive">{errorCamara}</p>
+          <Button
+            type="button"
+            variant="outline"
+            size="lg"
+            className="h-14 w-full text-xl"
+            onClick={() => {
+              setErrorCamara("");
+              leido.current = false;
+              setIntentos((n) => n + 1);
+            }}
+          >
+            Reintentar cámara
+          </Button>
+        </div>
+      )}
 
       <form onSubmit={enviar} className="space-y-3 rounded-2xl border-2 bg-card p-5">
         <label htmlFor="codigo" className="block text-xl font-bold">
