@@ -25,8 +25,10 @@ function InicioTecnico() {
           )}
         </Link>
       </Button>
-      <Button size="tile" variant="secondary">
-        <QrCode /> Escanear QR
+      <Button asChild size="tile" variant="secondary">
+        <Link to="/escanear">
+          <QrCode /> Escanear QR
+        </Link>
       </Button>
     </div>
   );

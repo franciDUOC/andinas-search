@@ -56,3 +56,10 @@ describe("Asignar técnico", () => {
     ).toEqual({ a: 2 });
   });
 });
+
+import { normalizarCodigo } from "@/lib/estados";
+describe("Escanear QR", () => {
+  it("acepta el código escrito en minúsculas y con espacios", () => {
+    expect(normalizarCodigo("  tor-001 ")).toBe("TOR-001");
+  });
+});

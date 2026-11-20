@@ -206,6 +206,18 @@ export type Database = {
         }
         Returns: boolean
       }
+      historial_maquina: {
+        Args: { _machine_id: string }
+        Returns: {
+          causa_falla: string
+          completado_en: string
+          creado_en: string
+          estado: string
+          id: string
+          tecnico: string
+          tipo: string
+        }[]
+      }
       iniciar_orden: { Args: { _orden_id: string }; Returns: undefined }
       terminar_orden: {
         Args: { _causa: string; _orden_id: string }

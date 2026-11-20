@@ -13,12 +13,15 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AuthenticatedBodegaRouteImport } from './routes/_authenticated/bodega'
+import { Route as AuthenticatedEscanearRouteImport } from './routes/_authenticated/escanear'
 import { Route as AuthenticatedMisOrdenesRouteImport } from './routes/_authenticated/mis-ordenes'
 import { Route as AuthenticatedOperarioRouteImport } from './routes/_authenticated/operario'
 import { Route as AuthenticatedReportarRouteImport } from './routes/_authenticated/reportar'
 import { Route as AuthenticatedSupervisorRouteImport } from './routes/_authenticated/supervisor'
 import { Route as AuthenticatedTecnicoRouteImport } from './routes/_authenticated/tecnico'
+import { Route as AuthenticatedMaquinaCodigoRouteImport } from './routes/_authenticated/maquina.$codigo'
 import { Route as AuthenticatedOrdenIdRouteImport } from './routes/_authenticated/orden.$id'
+import { Route as AuthenticatedMaquinaCodigoHistorialRouteImport } from './routes/_authenticated/maquina.$codigo_.historial'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -37,6 +40,11 @@ const AuthRoute = AuthRouteImport.update({
 const AuthenticatedBodegaRoute = AuthenticatedBodegaRouteImport.update({
   id: '/bodega',
   path: '/bodega',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedEscanearRoute = AuthenticatedEscanearRouteImport.update({
+  id: '/escanear',
+  path: '/escanear',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const AuthenticatedMisOrdenesRoute = AuthenticatedMisOrdenesRouteImport.update({
@@ -64,33 +72,51 @@ const AuthenticatedTecnicoRoute = AuthenticatedTecnicoRouteImport.update({
   path: '/tecnico',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedMaquinaCodigoRoute =
+  AuthenticatedMaquinaCodigoRouteImport.update({
+    id: '/maquina/$codigo',
+    path: '/maquina/$codigo',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedOrdenIdRoute = AuthenticatedOrdenIdRouteImport.update({
   id: '/orden/$id',
   path: '/orden/$id',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedMaquinaCodigoHistorialRoute =
+  AuthenticatedMaquinaCodigoHistorialRouteImport.update({
+    id: '/maquina/$codigo_/historial',
+    path: '/maquina/$codigo/historial',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/bodega': typeof AuthenticatedBodegaRoute
+  '/escanear': typeof AuthenticatedEscanearRoute
   '/mis-ordenes': typeof AuthenticatedMisOrdenesRoute
   '/operario': typeof AuthenticatedOperarioRoute
   '/reportar': typeof AuthenticatedReportarRoute
   '/supervisor': typeof AuthenticatedSupervisorRoute
   '/tecnico': typeof AuthenticatedTecnicoRoute
+  '/maquina/$codigo': typeof AuthenticatedMaquinaCodigoRoute
   '/orden/$id': typeof AuthenticatedOrdenIdRoute
+  '/maquina/$codigo/historial': typeof AuthenticatedMaquinaCodigoHistorialRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/bodega': typeof AuthenticatedBodegaRoute
+  '/escanear': typeof AuthenticatedEscanearRoute
   '/mis-ordenes': typeof AuthenticatedMisOrdenesRoute
   '/operario': typeof AuthenticatedOperarioRoute
   '/reportar': typeof AuthenticatedReportarRoute
   '/supervisor': typeof AuthenticatedSupervisorRoute
   '/tecnico': typeof AuthenticatedTecnicoRoute
+  '/maquina/$codigo': typeof AuthenticatedMaquinaCodigoRoute
   '/orden/$id': typeof AuthenticatedOrdenIdRoute
+  '/maquina/$codigo/historial': typeof AuthenticatedMaquinaCodigoHistorialRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -98,12 +124,15 @@ export interface FileRoutesById {
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
   '/_authenticated/bodega': typeof AuthenticatedBodegaRoute
+  '/_authenticated/escanear': typeof AuthenticatedEscanearRoute
   '/_authenticated/mis-ordenes': typeof AuthenticatedMisOrdenesRoute
   '/_authenticated/operario': typeof AuthenticatedOperarioRoute
   '/_authenticated/reportar': typeof AuthenticatedReportarRoute
   '/_authenticated/supervisor': typeof AuthenticatedSupervisorRoute
   '/_authenticated/tecnico': typeof AuthenticatedTecnicoRoute
+  '/_authenticated/maquina/$codigo': typeof AuthenticatedMaquinaCodigoRoute
   '/_authenticated/orden/$id': typeof AuthenticatedOrdenIdRoute
+  '/_authenticated/maquina/$codigo_/historial': typeof AuthenticatedMaquinaCodigoHistorialRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -111,35 +140,44 @@ export interface FileRouteTypes {
     | '/'
     | '/auth'
     | '/bodega'
+    | '/escanear'
     | '/mis-ordenes'
     | '/operario'
     | '/reportar'
     | '/supervisor'
     | '/tecnico'
+    | '/maquina/$codigo'
     | '/orden/$id'
+    | '/maquina/$codigo/historial'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/auth'
     | '/bodega'
+    | '/escanear'
     | '/mis-ordenes'
     | '/operario'
     | '/reportar'
     | '/supervisor'
     | '/tecnico'
+    | '/maquina/$codigo'
     | '/orden/$id'
+    | '/maquina/$codigo/historial'
   id:
     | '__root__'
     | '/'
     | '/_authenticated'
     | '/auth'
     | '/_authenticated/bodega'
+    | '/_authenticated/escanear'
     | '/_authenticated/mis-ordenes'
     | '/_authenticated/operario'
     | '/_authenticated/reportar'
     | '/_authenticated/supervisor'
     | '/_authenticated/tecnico'
+    | '/_authenticated/maquina/$codigo'
     | '/_authenticated/orden/$id'
+    | '/_authenticated/maquina/$codigo_/historial'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -178,6 +216,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedBodegaRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/escanear': {
+      id: '/_authenticated/escanear'
+      path: '/escanear'
+      fullPath: '/escanear'
+      preLoaderRoute: typeof AuthenticatedEscanearRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/mis-ordenes': {
       id: '/_authenticated/mis-ordenes'
       path: '/mis-ordenes'
@@ -213,6 +258,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedTecnicoRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/maquina/$codigo': {
+      id: '/_authenticated/maquina/$codigo'
+      path: '/maquina/$codigo'
+      fullPath: '/maquina/$codigo'
+      preLoaderRoute: typeof AuthenticatedMaquinaCodigoRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/orden/$id': {
       id: '/_authenticated/orden/$id'
       path: '/orden/$id'
@@ -220,27 +272,41 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedOrdenIdRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/maquina/$codigo_/historial': {
+      id: '/_authenticated/maquina/$codigo_/historial'
+      path: '/maquina/$codigo/historial'
+      fullPath: '/maquina/$codigo/historial'
+      preLoaderRoute: typeof AuthenticatedMaquinaCodigoHistorialRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
   }
 }
 
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedBodegaRoute: typeof AuthenticatedBodegaRoute
+  AuthenticatedEscanearRoute: typeof AuthenticatedEscanearRoute
   AuthenticatedMisOrdenesRoute: typeof AuthenticatedMisOrdenesRoute
   AuthenticatedOperarioRoute: typeof AuthenticatedOperarioRoute
   AuthenticatedReportarRoute: typeof AuthenticatedReportarRoute
   AuthenticatedSupervisorRoute: typeof AuthenticatedSupervisorRoute
   AuthenticatedTecnicoRoute: typeof AuthenticatedTecnicoRoute
+  AuthenticatedMaquinaCodigoRoute: typeof AuthenticatedMaquinaCodigoRoute
   AuthenticatedOrdenIdRoute: typeof AuthenticatedOrdenIdRoute
+  AuthenticatedMaquinaCodigoHistorialRoute: typeof AuthenticatedMaquinaCodigoHistorialRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedBodegaRoute: AuthenticatedBodegaRoute,
+  AuthenticatedEscanearRoute: AuthenticatedEscanearRoute,
   AuthenticatedMisOrdenesRoute: AuthenticatedMisOrdenesRoute,
   AuthenticatedOperarioRoute: AuthenticatedOperarioRoute,
   AuthenticatedReportarRoute: AuthenticatedReportarRoute,
   AuthenticatedSupervisorRoute: AuthenticatedSupervisorRoute,
   AuthenticatedTecnicoRoute: AuthenticatedTecnicoRoute,
+  AuthenticatedMaquinaCodigoRoute: AuthenticatedMaquinaCodigoRoute,
   AuthenticatedOrdenIdRoute: AuthenticatedOrdenIdRoute,
+  AuthenticatedMaquinaCodigoHistorialRoute:
+    AuthenticatedMaquinaCodigoHistorialRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =

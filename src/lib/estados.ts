@@ -60,3 +60,8 @@ export const TEXTO_ORDEN: Record<string, string> = {
   en_progreso: "En progreso",
   completada: "Completada",
 };
+
+/** Limpia el texto leído del QR o escrito a mano: sin espacios y en mayúsculas. */
+export function normalizarCodigo(texto: string): string {
+  return texto.trim().toUpperCase().replace(/\s+/g, "");
+}

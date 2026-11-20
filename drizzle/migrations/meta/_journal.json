@@ -43,6 +43,13 @@
       "when": 1795196807157,
       "tag": "0005_iniciar_terminar_orden",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1795196912449,
+      "tag": "0006_historial_maquina",
+      "breakpoints": true
     }
   ]
 }
