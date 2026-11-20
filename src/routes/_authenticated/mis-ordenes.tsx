@@ -1,7 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { queryOptions, useQueryClient, useSuspenseQuery } from "@tanstack/react-query";
 import { useEffect } from "react";
-import { ArrowLeft, MapPin } from "lucide-react";
+import { ArrowLeft, ChevronRight, MapPin } from "lucide-react";
+import { limpiarOrdenesNuevas } from "@/lib/avisos";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { exigirRol } from "@/lib/guard";
@@ -50,6 +51,10 @@ function MisOrdenes() {
   const { data: ordenes } = useSuspenseQuery(query);
 
   useEffect(() => {
+    limpiarOrdenesNuevas();
+  }, [ordenes]);
+
+  useEffect(() => {
     const canal = supabase
       .channel(`mis-ordenes-${Math.random().toString(36).slice(2)}`)
       .on(
@@ -81,7 +86,12 @@ function MisOrdenes() {
       ) : (
         <ul className="space-y-4">
           {ordenes.map((o) => (
-            <li key={o.id} className="space-y-3 rounded-2xl border-2 bg-card p-5">
+            <li key={o.id}>
+              <Link
+                to="/orden/$id"
+                params={{ id: o.id }}
+                className="block space-y-3 rounded-2xl border-2 bg-card p-5 hover:border-primary"
+              >
               <div className="flex flex-wrap items-start justify-between gap-3">
                 <div className="min-w-0">
                   <p className="text-base font-bold tracking-wide text-muted-foreground">
@@ -111,12 +121,16 @@ function MisOrdenes() {
                 <p className="text-lg text-foreground">{o.anomaly_reports.descripcion}</p>
               )}
               <p className="text-base text-muted-foreground">
-                Asignada el{" "}
+                Hora:{" "}
                 {new Date(o.creado_en).toLocaleString("es-CL", {
                   dateStyle: "short",
                   timeStyle: "short",
                 })}
               </p>
+              <p className="flex items-center justify-end gap-1 text-lg font-bold text-primary">
+                Ver detalle <ChevronRight className="size-6" />
+              </p>
+              </Link>
             </li>
           ))}
         </ul>

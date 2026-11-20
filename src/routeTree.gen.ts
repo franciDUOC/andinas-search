@@ -18,6 +18,7 @@ import { Route as AuthenticatedOperarioRouteImport } from './routes/_authenticat
 import { Route as AuthenticatedReportarRouteImport } from './routes/_authenticated/reportar'
 import { Route as AuthenticatedSupervisorRouteImport } from './routes/_authenticated/supervisor'
 import { Route as AuthenticatedTecnicoRouteImport } from './routes/_authenticated/tecnico'
+import { Route as AuthenticatedOrdenIdRouteImport } from './routes/_authenticated/orden.$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -63,6 +64,11 @@ const AuthenticatedTecnicoRoute = AuthenticatedTecnicoRouteImport.update({
   path: '/tecnico',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedOrdenIdRoute = AuthenticatedOrdenIdRouteImport.update({
+  id: '/orden/$id',
+  path: '/orden/$id',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -73,6 +79,7 @@ export interface FileRoutesByFullPath {
   '/reportar': typeof AuthenticatedReportarRoute
   '/supervisor': typeof AuthenticatedSupervisorRoute
   '/tecnico': typeof AuthenticatedTecnicoRoute
+  '/orden/$id': typeof AuthenticatedOrdenIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -83,6 +90,7 @@ export interface FileRoutesByTo {
   '/reportar': typeof AuthenticatedReportarRoute
   '/supervisor': typeof AuthenticatedSupervisorRoute
   '/tecnico': typeof AuthenticatedTecnicoRoute
+  '/orden/$id': typeof AuthenticatedOrdenIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -95,6 +103,7 @@ export interface FileRoutesById {
   '/_authenticated/reportar': typeof AuthenticatedReportarRoute
   '/_authenticated/supervisor': typeof AuthenticatedSupervisorRoute
   '/_authenticated/tecnico': typeof AuthenticatedTecnicoRoute
+  '/_authenticated/orden/$id': typeof AuthenticatedOrdenIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -107,6 +116,7 @@ export interface FileRouteTypes {
     | '/reportar'
     | '/supervisor'
     | '/tecnico'
+    | '/orden/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -117,6 +127,7 @@ export interface FileRouteTypes {
     | '/reportar'
     | '/supervisor'
     | '/tecnico'
+    | '/orden/$id'
   id:
     | '__root__'
     | '/'
@@ -128,6 +139,7 @@ export interface FileRouteTypes {
     | '/_authenticated/reportar'
     | '/_authenticated/supervisor'
     | '/_authenticated/tecnico'
+    | '/_authenticated/orden/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -201,6 +213,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedTecnicoRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/orden/$id': {
+      id: '/_authenticated/orden/$id'
+      path: '/orden/$id'
+      fullPath: '/orden/$id'
+      preLoaderRoute: typeof AuthenticatedOrdenIdRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
   }
 }
 
@@ -211,6 +230,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedReportarRoute: typeof AuthenticatedReportarRoute
   AuthenticatedSupervisorRoute: typeof AuthenticatedSupervisorRoute
   AuthenticatedTecnicoRoute: typeof AuthenticatedTecnicoRoute
+  AuthenticatedOrdenIdRoute: typeof AuthenticatedOrdenIdRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
@@ -220,6 +240,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedReportarRoute: AuthenticatedReportarRoute,
   AuthenticatedSupervisorRoute: AuthenticatedSupervisorRoute,
   AuthenticatedTecnicoRoute: AuthenticatedTecnicoRoute,
+  AuthenticatedOrdenIdRoute: AuthenticatedOrdenIdRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =

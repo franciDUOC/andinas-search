@@ -206,6 +206,11 @@ export type Database = {
         }
         Returns: boolean
       }
+      iniciar_orden: { Args: { _orden_id: string }; Returns: undefined }
+      terminar_orden: {
+        Args: { _causa: string; _orden_id: string }
+        Returns: undefined
+      }
     }
     Enums: {
       app_role: "operario" | "tecnico" | "supervisor" | "bodega"
