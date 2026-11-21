@@ -12,7 +12,7 @@ export const Route = createFileRoute("/auth")({
   ssr: false,
   head: () => ({
     meta: [
-      { title: "Iniciar sesión · Andinas Search" },
+      { title: "Iniciar sesión · Andinas Search" }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary" },
       { name: "description", content: "Ingreso al sistema de mantenimiento Andinas Search." },
       { property: "og:title", content: "Iniciar sesión · Andinas Search" },
       { property: "og:description", content: "Ingreso al sistema de mantenimiento Andinas Search." },

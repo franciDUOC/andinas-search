@@ -25,7 +25,7 @@ export const Route = createFileRoute("/_authenticated/maquina/$codigo_/historial
   },
   head: () => ({
     meta: [
-      { title: "Historial de máquina · Andinas Search" },
+      { title: "Historial de máquina · Andinas Search" }, { property: "og:title", content: "Historial de máquina · Andinas Search" }, { property: "og:description", content: "Intervenciones registradas de la máquina." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary" },
       { name: "description", content: "Intervenciones registradas de la máquina." },
     ],
   }),

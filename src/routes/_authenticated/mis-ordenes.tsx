@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { queryOptions, useQueryClient, useSuspenseQuery } from "@tanstack/react-query";
+import { useQueryClient, useSuspenseQuery } from "@tanstack/react-query";
 import { useEffect } from "react";
 import { ArrowLeft, ChevronRight, MapPin } from "lucide-react";
 import { limpiarOrdenesNuevas } from "@/lib/avisos";
@@ -8,22 +8,7 @@ import { Button } from "@/components/ui/button";
 import { exigirRol } from "@/lib/guard";
 import { TEXTO_ORDEN, TEXTO_TIPO } from "@/lib/estados";
 import { cn } from "@/lib/utils";
-
-const ordenesQuery = (tecnicoId: string) =>
-  queryOptions({
-    queryKey: ["mis-ordenes", tecnicoId],
-    queryFn: async () => {
-      const { data, error } = await supabase
-        .from("work_orders")
-        .select(
-          "id,estado,creado_en,machines(codigo,nombre,ubicacion),anomaly_reports(tipo,descripcion)",
-        )
-        .eq("tecnico_id", tecnicoId)
-        .order("creado_en", { ascending: false });
-      if (error) throw error;
-      return data;
-    },
-  });
+import { ordenesQuery } from "@/lib/ordenes";
 
 export const Route = createFileRoute("/_authenticated/mis-ordenes")({
   beforeLoad: ({ context }) => exigirRol(context.sesion, "tecnico"),
@@ -31,7 +16,7 @@ export const Route = createFileRoute("/_authenticated/mis-ordenes")({
     context.queryClient.ensureQueryData(ordenesQuery(context.sesion.userId)),
   head: () => ({
     meta: [
-      { title: "Mis órdenes · Andinas Search" },
+      { title: "Mis órdenes · Andinas Search" }, { property: "og:title", content: "Mis órdenes · Andinas Search" }, { property: "og:description", content: "Órdenes de trabajo asignadas al técnico." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary" },
       { name: "description", content: "Órdenes de trabajo asignadas al técnico." },
     ],
   }),
@@ -81,7 +66,7 @@ function MisOrdenes() {
 
       {ordenes.length === 0 ? (
         <p className="rounded-xl border-2 border-dashed border-border p-8 text-center text-xl text-muted-foreground">
-          No tienes órdenes asignadas.
+          No tienes órdenes pendientes.
         </p>
       ) : (
         <ul className="space-y-4">

@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { queryOptions, useQueryClient, useSuspenseQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { ArrowLeft, CheckCircle2, MapPin, Play } from "lucide-react";
@@ -30,7 +30,7 @@ export const Route = createFileRoute("/_authenticated/orden/$id")({
   loader: ({ context, params }) => context.queryClient.ensureQueryData(ordenQuery(params.id)),
   head: () => ({
     meta: [
-      { title: "Detalle de orden · Andinas Search" },
+      { title: "Detalle de orden · Andinas Search" }, { property: "og:title", content: "Detalle de orden · Andinas Search" }, { property: "og:description", content: "Detalle de la orden de trabajo del técnico." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary" },
       { name: "description", content: "Detalle de la orden de trabajo del técnico." },
     ],
   }),
@@ -41,6 +41,7 @@ const fecha = (v: string) =>
   new Date(v).toLocaleString("es-CL", { dateStyle: "short", timeStyle: "short" });
 
 function DetalleOrden() {
+  const navigate = useNavigate();
   const { id } = Route.useParams();
   const { sesion } = Route.useRouteContext();
   const queryClient = useQueryClient();
@@ -76,6 +77,8 @@ function DetalleOrden() {
     if (error) return setError("No se pudo terminar la orden. Intenta de nuevo.");
     setTerminando(false);
     await refrescar();
+    await queryClient.invalidateQueries({ queryKey: ["registro-ordenes"] });
+    await navigate({ to: "/mis-ordenes", replace: true });
   }
 
   return (

@@ -1,7 +1,8 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { queryOptions, useQueryClient, useSuspenseQuery } from "@tanstack/react-query";
 import { useEffect, useState, type ReactNode } from "react";
-import { Bell, MapPin } from "lucide-react";
+import { Bell, History, MapPin } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
 import { exigirRol } from "@/lib/guard";
 import {
@@ -50,7 +51,7 @@ export const Route = createFileRoute("/_authenticated/supervisor")({
     ]),
   head: () => ({
     meta: [
-      { title: "Panel de máquinas · Andinas Search" },
+      { title: "Panel de máquinas · Andinas Search" }, { property: "og:title", content: "Panel de máquinas · Andinas Search" }, { property: "og:description", content: "Estado en tiempo real de las máquinas de la planta." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary" },
       { name: "description", content: "Estado en tiempo real de las máquinas de la planta." },
     ],
   }),
@@ -113,6 +114,10 @@ function PanelMaquinas() {
           )}
         </div>
       </div>
+
+      <Button asChild variant="outline" className="min-h-14 w-full whitespace-normal text-lg sm:w-auto">
+        <Link to="/registro-ordenes"><History /> Registro de órdenes completadas</Link>
+      </Button>
 
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
         {FILTROS.map((f) => {

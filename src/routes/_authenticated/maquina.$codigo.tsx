@@ -26,7 +26,7 @@ export const Route = createFileRoute("/_authenticated/maquina/$codigo")({
   loader: ({ context, params }) => context.queryClient.ensureQueryData(maquinaQuery(params.codigo)),
   head: () => ({
     meta: [
-      { title: "Ficha de máquina · Andinas Search" },
+      { title: "Ficha de máquina · Andinas Search" }, { property: "og:title", content: "Ficha de máquina · Andinas Search" }, { property: "og:description", content: "Ficha de la máquina escaneada." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary" },
       { name: "description", content: "Ficha de la máquina escaneada." },
     ],
   }),

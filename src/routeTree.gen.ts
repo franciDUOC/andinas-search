@@ -16,6 +16,7 @@ import { Route as AuthenticatedBodegaRouteImport } from './routes/_authenticated
 import { Route as AuthenticatedEscanearRouteImport } from './routes/_authenticated/escanear'
 import { Route as AuthenticatedMisOrdenesRouteImport } from './routes/_authenticated/mis-ordenes'
 import { Route as AuthenticatedOperarioRouteImport } from './routes/_authenticated/operario'
+import { Route as AuthenticatedRegistroOrdenesRouteImport } from './routes/_authenticated/registro-ordenes'
 import { Route as AuthenticatedReportarRouteImport } from './routes/_authenticated/reportar'
 import { Route as AuthenticatedSupervisorRouteImport } from './routes/_authenticated/supervisor'
 import { Route as AuthenticatedTecnicoRouteImport } from './routes/_authenticated/tecnico'
@@ -57,6 +58,12 @@ const AuthenticatedOperarioRoute = AuthenticatedOperarioRouteImport.update({
   path: '/operario',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedRegistroOrdenesRoute =
+  AuthenticatedRegistroOrdenesRouteImport.update({
+    id: '/registro-ordenes',
+    path: '/registro-ordenes',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedReportarRoute = AuthenticatedReportarRouteImport.update({
   id: '/reportar',
   path: '/reportar',
@@ -97,6 +104,7 @@ export interface FileRoutesByFullPath {
   '/escanear': typeof AuthenticatedEscanearRoute
   '/mis-ordenes': typeof AuthenticatedMisOrdenesRoute
   '/operario': typeof AuthenticatedOperarioRoute
+  '/registro-ordenes': typeof AuthenticatedRegistroOrdenesRoute
   '/reportar': typeof AuthenticatedReportarRoute
   '/supervisor': typeof AuthenticatedSupervisorRoute
   '/tecnico': typeof AuthenticatedTecnicoRoute
@@ -111,6 +119,7 @@ export interface FileRoutesByTo {
   '/escanear': typeof AuthenticatedEscanearRoute
   '/mis-ordenes': typeof AuthenticatedMisOrdenesRoute
   '/operario': typeof AuthenticatedOperarioRoute
+  '/registro-ordenes': typeof AuthenticatedRegistroOrdenesRoute
   '/reportar': typeof AuthenticatedReportarRoute
   '/supervisor': typeof AuthenticatedSupervisorRoute
   '/tecnico': typeof AuthenticatedTecnicoRoute
@@ -127,6 +136,7 @@ export interface FileRoutesById {
   '/_authenticated/escanear': typeof AuthenticatedEscanearRoute
   '/_authenticated/mis-ordenes': typeof AuthenticatedMisOrdenesRoute
   '/_authenticated/operario': typeof AuthenticatedOperarioRoute
+  '/_authenticated/registro-ordenes': typeof AuthenticatedRegistroOrdenesRoute
   '/_authenticated/reportar': typeof AuthenticatedReportarRoute
   '/_authenticated/supervisor': typeof AuthenticatedSupervisorRoute
   '/_authenticated/tecnico': typeof AuthenticatedTecnicoRoute
@@ -143,6 +153,7 @@ export interface FileRouteTypes {
     | '/escanear'
     | '/mis-ordenes'
     | '/operario'
+    | '/registro-ordenes'
     | '/reportar'
     | '/supervisor'
     | '/tecnico'
@@ -157,6 +168,7 @@ export interface FileRouteTypes {
     | '/escanear'
     | '/mis-ordenes'
     | '/operario'
+    | '/registro-ordenes'
     | '/reportar'
     | '/supervisor'
     | '/tecnico'
@@ -172,6 +184,7 @@ export interface FileRouteTypes {
     | '/_authenticated/escanear'
     | '/_authenticated/mis-ordenes'
     | '/_authenticated/operario'
+    | '/_authenticated/registro-ordenes'
     | '/_authenticated/reportar'
     | '/_authenticated/supervisor'
     | '/_authenticated/tecnico'
@@ -237,6 +250,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedOperarioRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/registro-ordenes': {
+      id: '/_authenticated/registro-ordenes'
+      path: '/registro-ordenes'
+      fullPath: '/registro-ordenes'
+      preLoaderRoute: typeof AuthenticatedRegistroOrdenesRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/reportar': {
       id: '/_authenticated/reportar'
       path: '/reportar'
@@ -287,6 +307,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedEscanearRoute: typeof AuthenticatedEscanearRoute
   AuthenticatedMisOrdenesRoute: typeof AuthenticatedMisOrdenesRoute
   AuthenticatedOperarioRoute: typeof AuthenticatedOperarioRoute
+  AuthenticatedRegistroOrdenesRoute: typeof AuthenticatedRegistroOrdenesRoute
   AuthenticatedReportarRoute: typeof AuthenticatedReportarRoute
   AuthenticatedSupervisorRoute: typeof AuthenticatedSupervisorRoute
   AuthenticatedTecnicoRoute: typeof AuthenticatedTecnicoRoute
@@ -300,6 +321,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedEscanearRoute: AuthenticatedEscanearRoute,
   AuthenticatedMisOrdenesRoute: AuthenticatedMisOrdenesRoute,
   AuthenticatedOperarioRoute: AuthenticatedOperarioRoute,
+  AuthenticatedRegistroOrdenesRoute: AuthenticatedRegistroOrdenesRoute,
   AuthenticatedReportarRoute: AuthenticatedReportarRoute,
   AuthenticatedSupervisorRoute: AuthenticatedSupervisorRoute,
   AuthenticatedTecnicoRoute: AuthenticatedTecnicoRoute,

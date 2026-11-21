@@ -10,7 +10,7 @@ export const Route = createFileRoute("/_authenticated/escanear")({
   beforeLoad: ({ context }) => exigirRol(context.sesion, "tecnico"),
   head: () => ({
     meta: [
-      { title: "Escanear QR · Andinas Search" },
+      { title: "Escanear QR · Andinas Search" }, { property: "og:title", content: "Escanear QR · Andinas Search" }, { property: "og:description", content: "Escanea el QR de una máquina para ver su ficha." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary" },
       { name: "description", content: "Escanea el QR de una máquina para ver su ficha." },
     ],
   }),

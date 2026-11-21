@@ -30,3 +30,4 @@ use the editor.
 <!-- LOVABLE:END -->
 
 - Roles live in `public.user_roles` (checked via `has_role`), never on `profiles`; each role page guards itself with `exigirRol` in `beforeLoad` so wrong-role users are redirected to their own home.
+- Keep work-order list queries in `src/lib/ordenes.ts`: technicians query active orders only, while the supervisor completion register reads the original completed rows, preserving machine history without copying or deleting records.

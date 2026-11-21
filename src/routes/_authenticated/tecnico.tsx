@@ -6,7 +6,7 @@ import { useOrdenesNuevas } from "@/lib/avisos";
 
 export const Route = createFileRoute("/_authenticated/tecnico")({
   beforeLoad: ({ context }) => exigirRol(context.sesion, "tecnico"),
-  head: () => ({ meta: [{ title: "Inicio Técnico · Andinas Search" }] }),
+  head: () => ({ meta: [{ title: "Inicio Técnico · Andinas Search" }, { name: "description", content: "Inicio del técnico para consultar sus órdenes y escanear máquinas." }, { property: "og:title", content: "Inicio Técnico · Andinas Search" }, { property: "og:description", content: "Inicio del técnico para consultar sus órdenes y escanear máquinas." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary" }] }),
   component: InicioTecnico,
 });
 

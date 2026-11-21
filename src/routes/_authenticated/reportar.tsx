@@ -10,7 +10,7 @@ import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/_authenticated/reportar")({
   beforeLoad: ({ context }) => exigirRol(context.sesion, "operario"),
-  head: () => ({ meta: [{ title: "Reportar anomalía · Andinas Search" }] }),
+  head: () => ({ meta: [{ title: "Reportar anomalía · Andinas Search" }, { name: "description", content: "Reporte de anomalías de máquinas de Manufacturas Andina." }, { property: "og:title", content: "Reportar anomalía · Andinas Search" }, { property: "og:description", content: "Reporte de anomalías de máquinas de Manufacturas Andina." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary" }] }),
   component: Reportar,
 });
 

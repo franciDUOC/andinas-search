@@ -6,7 +6,7 @@ export const Route = createFileRoute("/")({
   ssr: false,
   head: () => ({
     meta: [
-      { title: "Andinas Search · Mantenimiento Manufacturas Andina" },
+      { title: "Andinas Search · Mantenimiento Manufacturas Andina" }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary" },
       { name: "description", content: "Sistema de mantenimiento de planta de Manufacturas Andina." },
       { property: "og:title", content: "Andinas Search" },
       { property: "og:description", content: "Sistema de mantenimiento de planta de Manufacturas Andina." },
